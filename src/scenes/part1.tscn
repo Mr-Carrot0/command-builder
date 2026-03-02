@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://4etdmo1gran2"]
+
+[ext_resource type="Texture2D" uid="uid://mgixanqdb2su" path="res://src/assets/grid_2.png" id="1_cklgj"]
+[ext_resource type="Script" uid="uid://w5gg48tiegp0" path="res://src/scripts/ClickSensor.cs" id="2_b2puv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2puv"]
+albedo_color = Color(0.2901961, 0.36862746, 0.972549, 1)
+albedo_texture = ExtResource("1_cklgj")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07306719, 0)
+material_override = SubResource("StandardMaterial3D_b2puv")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(8, 1, 8)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.3197791, 0.7751787, -0.5448297, -0.022008127, 0.5809447, 0.8136455, 0.9472365, -0.24819614, 0.20283422, -4.4246964, 3.6397939, 1.9980893)
+
+[node name="Click Sensor" type="Node" parent="." node_paths=PackedStringArray("Cam")]
+script = ExtResource("2_b2puv")
+Cam = NodePath("../Camera3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6.72196, 0)
