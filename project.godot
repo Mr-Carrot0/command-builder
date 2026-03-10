@@ -13,8 +13,18 @@ config_version=5
 config/name="command-builder"
 run/main_scene="uid://4etdmo1gran2"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
+run/max_fps=200
 config/icon="res://icon.svg"
+
+[debug_draw_3d]
+
+settings/addon_root_folder="res://addons/debug_draw_3d"
 
 [dotnet]
 
 project/assembly_name="command-builder"
+
+[layer_names]
+
+3d_physics/layer_2="board"
+3d_physics/layer_3="box"

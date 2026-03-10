@@ -1,0 +1,14 @@
+[gd_resource type="BoxMesh" load_steps=3 format=3 uid="uid://bs0347jhliokh"]
+
+[ext_resource type="Texture2D" uid="uid://mgixanqdb2su" path="res://src/assets/grid_2.png" id="1_8heh1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2puv"]
+albedo_color = Color(0.2901961, 0.36862746, 0.972549, 1)
+albedo_texture = ExtResource("1_8heh1")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0.25, 0, 0.25)
+uv1_triplanar = true
+
+[resource]
+material = SubResource("StandardMaterial3D_b2puv")
+size = Vector3(5, 1, 5)

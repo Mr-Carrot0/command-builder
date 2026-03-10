@@ -1,29 +1,45 @@
 [gd_scene load_steps=4 format=3 uid="uid://4etdmo1gran2"]
 
-[ext_resource type="Texture2D" uid="uid://mgixanqdb2su" path="res://src/assets/grid_2.png" id="1_cklgj"]
-[ext_resource type="Script" uid="uid://w5gg48tiegp0" path="res://src/scripts/ClickSensor.cs" id="2_b2puv"]
+[ext_resource type="Script" uid="uid://c5qc8wtdq2cd5" path="res://src/scripts/Grid.cs" id="1_b2puv"]
+[ext_resource type="BoxMesh" uid="uid://bs0347jhliokh" path="res://src/prefabs/part1-mesh.tres" id="2_b2puv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2puv"]
-albedo_color = Color(0.2901961, 0.36862746, 0.972549, 1)
-albedo_texture = ExtResource("1_cklgj")
-uv1_triplanar = true
-uv1_world_triplanar = true
+[sub_resource type="BoxShape3D" id="BoxShape3D_6phig"]
+size = Vector3(5.7834473, 1, 5.3079834)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07306719, 0)
-material_override = SubResource("StandardMaterial3D_b2puv")
+[node name="Grid" type="StaticBody3D" parent="." node_paths=PackedStringArray("Cam", "ColShape", "BoxContainer", "RayCast")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_b2puv")
+Cam = NodePath("env/Camera3D")
+ColShape = NodePath("CollisionShape3D")
+BoxContainer = NodePath("Container")
+bitmask = 6
+RayCast = NodePath("env/Camera3D/RayCast3D")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-size = Vector3(8, 1, 8)
+[node name="Container" type="Node3D" parent="Grid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0.5)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.3197791, 0.7751787, -0.5448297, -0.022008127, 0.5809447, 0.8136455, 0.9472365, -0.24819614, 0.20283422, -4.4246964, 3.6397939, 1.9980893)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Grid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.527954, 0, 2.5202026)
+shape = SubResource("BoxShape3D_6phig")
 
-[node name="Click Sensor" type="Node" parent="." node_paths=PackedStringArray("Cam")]
-script = ExtResource("2_b2puv")
-Cam = NodePath("../Camera3D")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Grid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2.5)
+mesh = ExtResource("2_b2puv")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 6.72196, 0)
+[node name="env" type="Node3D" parent="Grid"]
+transform = Transform3D(1, 0, 0, 0, 0.87768203, -0.47924343, 0, 0.47924343, 0.87768203, 2.5, 4.468181, 4.2013845)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Grid/env"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Grid/env"]
+transform = Transform3D(1, 0, 0, 0, -0.16446233, 0.98638326, 0, -0.98638326, -0.16446233, 0, 0, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="Grid/env/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+visible = false
+target_position = Vector3(0, -8, 0)
+collision_mask = 6
