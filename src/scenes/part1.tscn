@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://4etdmo1gran2"]
+[gd_scene load_steps=7 format=3 uid="uid://4etdmo1gran2"]
 
 [ext_resource type="Script" uid="uid://b3dh4hrs6n4ac" path="res://src/scripts/GameBoard.cs" id="1_b2puv"]
 [ext_resource type="BoxMesh" uid="uid://bs0347jhliokh" path="res://src/prefabs/part1-mesh.tres" id="2_b2puv"]
 [ext_resource type="Script" uid="uid://colu4aft7otr5" path="res://src/scripts/CursorRayCast.cs" id="3_6phig"]
+[ext_resource type="Script" uid="uid://crmrxivtw38o4" path="res://src/scenes/ChestRandomizer.cs" id="4_pys2p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6phig"]
 size = Vector3(5.7834473, 1, 5.3079834)
+
+[sub_resource type="LabelSettings" id="LabelSettings_felkk"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -15,7 +18,7 @@ collision_mask = 2
 script = ExtResource("1_b2puv")
 Cam = NodePath("env/Camera3D")
 CursorCast = NodePath("../RayCast3D")
-UndoButton = NodePath("../UndoButton")
+UndoButton = NodePath("../UI_Root/UndoButton")
 ColShape = NodePath("CollisionShape3D")
 BoxContainer = NodePath("Container")
 
@@ -46,12 +49,58 @@ collision_mask = 6
 script = ExtResource("3_6phig")
 Cam = NodePath("../Grid/env/Camera3D")
 
-[node name="UndoButton" type="Button" parent="."]
+[node name="UI_Root" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1057.0
-offset_bottom = -591.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Chest" type="Button" parent="UI_Root"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.010000001
+anchor_top = 0.120000005
+anchor_right = 0.095000006
+anchor_bottom = 0.16800001
+offset_left = -0.52000046
+offset_top = 0.23999786
+offset_right = -0.44001007
+offset_bottom = 0.13599396
+text = "Open Chest"
+
+[node name="Label" type="Label" parent="UI_Root"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.010000001
+anchor_top = 0.19100001
+anchor_right = 0.109000005
+anchor_bottom = 0.22700001
+offset_left = -0.52000046
+offset_top = 0.231987
+offset_right = 0.43199158
+offset_bottom = -0.0960083
+text = "Chest Content:"
+metadata/_edit_use_anchors_ = true
+
+[node name="ChestContent" type="Label" parent="UI_Root/Label"]
+layout_mode = 0
+offset_left = 129.0
+offset_right = 244.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_felkk")
+script = ExtResource("4_pys2p")
+
+[node name="UndoButton" type="Button" parent="UI_Root"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.082
+anchor_bottom = 0.08800001
+offset_right = 0.5359955
+offset_bottom = -0.02400589
 grow_horizontal = 2
 grow_vertical = 2
 text = "Undo"
+
+[connection signal="pressed" from="UI_Root/Chest" to="UI_Root/Label/ChestContent" method="Generate"]

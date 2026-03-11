@@ -15,11 +15,20 @@ public static class Utils
     {
         return new(x, vec.X, vec.Y);
     }
-    // public static void IterVec3(Vector3 vec, Action<float, int, Vector3> fn)
-    // {
-    //     for (int i = 0; i < 3; i++)
-    //     {
-    //         fn(vec[i], i, vec);
-    //     }
-    // }
+
+    public static string Lettrify3to10(int i)
+    {
+        return i switch
+        {
+            3 => "three",
+            4 => "four",
+            5 => "five",
+            6 => "six",
+            7 => "seven",
+            8 => "eight",
+            9 => "nine",
+            10 => "ten",
+            _ => i.ToString(),
+        };
+    }
 }
