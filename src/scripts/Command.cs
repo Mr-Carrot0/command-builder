@@ -1,13 +1,11 @@
-using Godot;
-using System;
-using System.Collections.Generic;
+public interface ICommand
+{
+    public void Execute();
+    public void Undo();
+}
 public class CommandManager
 {
-    public CommandManager()
-    {
-        UndoStack = new(64);
-    }
-    public Stack<ICommand> UndoStack;
+    readonly System.Collections.Generic.Stack<ICommand> UndoStack = new(64);
 
     public void Undo()
     {
@@ -21,11 +19,3 @@ public class CommandManager
     }
 
 }
-
-public interface ICommand
-{
-    public void Execute();
-    public void Undo();
-}
-
-

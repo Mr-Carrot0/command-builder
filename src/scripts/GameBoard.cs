@@ -26,8 +26,6 @@ public partial class GameBoard : StaticBody3D
     PackedScene BoxScene;
     [Export] Node3D BoxContainer;
 
-    Vector3 RayHitPos;
-
     public override void _Ready()
     {
         BoxScene = GD.Load<PackedScene>("res://src/prefabs/BasicBox.tscn");
@@ -44,20 +42,14 @@ public partial class GameBoard : StaticBody3D
             {
                 BasicBox m = BoxScene.Instantiate<BasicBox>();
                 m.Position = new(i, 0, j);
-                // Boxes[i][j].Visible = false;
                 Boxes[i][j] = m;
                 BoxContainer.AddChild(m);
             }
         }
-
-
-        // GD.Print(data);
-        PrintData();
     }
-    public override void _Process(double delta)
-    {
-        DebugDraw3D.DrawSphere(RayHitPos, 0.3f);
-    }
+    // public override void _Process(double delta)
+    // {
+    // }
 
     public override void _Input(InputEvent @event)
     {
@@ -67,41 +59,33 @@ public partial class GameBoard : StaticBody3D
         {
             if (CursorCast.Test(mouseEvt) is RayHit rayHit)
             {
-                BasicBox bestBox = null;
-
-                if (rayHit.collider is BasicBox box)
+                switch (mouseEvt.ButtonIndex)
                 {
-                    bestBox = box;
-                    if (mouseEvt.ButtonIndex == MouseButton.Right)
-                    {
-                        CommandCtx.Add(new RemoveTile(box));
-
-                    }
-                    GD.Print(box);
-                }
-                else
-                {
-                    if (mouseEvt.ButtonIndex == MouseButton.Left && rayHit.collider is GameBoard Board)
-                    {
-
-                        RayHitPos = rayHit.position;
-                        Idxz idx = ((int)Mathf.Round(RayHitPos.X - Board.GlobalPosition.X - 0.5f),
-                            (int)Mathf.Round(RayHitPos.Z - Board.GlobalPosition.Z - 0.5f)
-                        );
-
-                        if (idx.x < dimentions && idx.z < dimentions
-                            && idx.x >= 0 && idx.z >= 0)
+                    case MouseButton.Left:
+                        if (rayHit.collider is GameBoard Board)
                         {
-                            // bestBox = GetBox(idx);
-                            CommandCtx.Add(new AddTile(GetBox(idx)));
+                            Idxz idx = ((int)Mathf.Round(rayHit.position.X - Board.GlobalPosition.X - 0.5f),
+                                (int)Mathf.Round(rayHit.position.Z - Board.GlobalPosition.Z - 0.5f)
+                            );
 
+                            if (idx.x < dimentions && idx.z < dimentions
+                                && idx.x >= 0 && idx.z >= 0)
+                            {
+                                CommandCtx.Add(new AddTile(GetBox(idx)));
+                            }
                         }
-                    }
+                        break;
+                    case MouseButton.Right:
+                        if (rayHit.collider is BasicBox box)
+                        {
+                            CommandCtx.Add(new RemoveTile(box));
+                        }
+                        break;
                 }
             }
         }
     }
-    public class AddTile(BasicBox Tile) : ICommand
+    class AddTile(BasicBox Tile) : ICommand
     {
         public readonly BasicBox Tile = Tile;
         public void Execute()
@@ -113,7 +97,7 @@ public partial class GameBoard : StaticBody3D
             Tile.Enabled = false;
         }
     }
-    public class RemoveTile(BasicBox Tile) : ICommand
+    class RemoveTile(BasicBox Tile) : ICommand
     {
         public readonly BasicBox Tile = Tile;
         public void Execute()
@@ -125,41 +109,6 @@ public partial class GameBoard : StaticBody3D
             Tile.Visible = true;
         }
     }
-
-    void PrintData()
-    {
-        for (int col = 0; col < dimentions; col++)
-        {
-            string printOut = "";
-            for (int row = 0; row < dimentions; row++)
-            {
-                printOut += Boxes[col][row] != null && Boxes[col][row].Visible
-                    ? " 1" : " 0";
-            }
-            GD.Print(printOut);
-        }
-    }
-    public static class Debug
-    {
-        public static int BtI(bool b)
-        {
-            return b ? 1 : 0;
-        }
-        public static string BtIS(bool b)
-        {
-            return b ? "1" : "0";
-        }
-        public static string BoolsToStr(bool[] bools)
-        {
-            string rt = "";
-            for (int i = 0; i < bools.Length; i++)
-            {
-                rt += " " + BtIS(bools[i]);
-            }
-            return rt;
-        }
-    }
-
 }
 
 

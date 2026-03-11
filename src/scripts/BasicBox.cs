@@ -3,17 +3,17 @@ using System;
 
 public partial class BasicBox : StaticBody3D
 {
-    [Export] MeshInstance3D MeshInstance;
+    // [Export] MeshInstance3D MeshInstance;
     [Export] CollisionShape3D ColShape;
-    public Vector3 Size
-    {
-        get { return Shape.Size; }
-        set
-        {
-            Shape.Size = value;
-            Mesh.Size = value;
-        }
-    }
+    // public Vector3 Size
+    // {
+    //     get { return Shape.Size; }
+    //     set
+    //     {
+    //         Shape.Size = value;
+    //         Mesh.Size = value;
+    //     }
+    // }
 
     public bool Enabled
     {
@@ -28,21 +28,8 @@ public partial class BasicBox : StaticBody3D
         }
     }
 
-    // private new bool Visible
-    // {
-    //     get
-    //     {
-    //         return IsVisible();
-            
-    //     }
-    //     set
-    //     {
-    //         SetVisible(value);
-    //     }
-    // }
-
-    public BoxShape3D Shape { get { return (BoxShape3D)ColShape.Shape; } }
-    public BoxMesh Mesh { get { return (BoxMesh)MeshInstance.Mesh; } }
+    // public BoxShape3D Shape { get { return (BoxShape3D)ColShape.Shape; } }
+    // public BoxMesh Mesh { get { return (BoxMesh)MeshInstance.Mesh; } }
 
     public override void _Ready()
     {

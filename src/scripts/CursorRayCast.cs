@@ -20,14 +20,8 @@ public partial class CursorRayCast : RayCast3D
     }
 }
 
-
 public struct RayHit(Vector3 position, CollisionObject3D collider)
 {
     public Vector3 position = position;
     public CollisionObject3D collider = collider;
-    // public readonly Rid rid;
-    // public readonly Vector3 normal;
-    // public readonly object collider_id;
-    // public readonly int shape;
-    // public readonly Variant metadata;
 }
