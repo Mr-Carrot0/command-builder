@@ -23,23 +23,23 @@ public partial class BasicBox : StaticBody3D
         }
         set
         {
-            base.Visible = value;
+            Visible = value;
             ColShape.Disabled = !value;
         }
     }
 
-    private bool Visible
-    {
-        get
-        {
-            return base.IsVisible();
+    // private new bool Visible
+    // {
+    //     get
+    //     {
+    //         return IsVisible();
             
-        }
-        set
-        {
-            base.SetVisible(value);
-        }
-    }
+    //     }
+    //     set
+    //     {
+    //         SetVisible(value);
+    //     }
+    // }
 
     public BoxShape3D Shape { get { return (BoxShape3D)ColShape.Shape; } }
     public BoxMesh Mesh { get { return (BoxMesh)MeshInstance.Mesh; } }

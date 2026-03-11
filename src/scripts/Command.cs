@@ -11,7 +11,8 @@ public class CommandManager
 
     public void Undo()
     {
-        UndoStack.Pop().Undo();
+        if (UndoStack.Count > 0)
+            UndoStack.Pop().Undo();
     }
     public void Add(ICommand command)
     {

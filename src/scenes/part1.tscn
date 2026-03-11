@@ -1,22 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://4etdmo1gran2"]
+[gd_scene load_steps=5 format=3 uid="uid://4etdmo1gran2"]
 
-[ext_resource type="Script" uid="uid://c5qc8wtdq2cd5" path="res://src/scripts/Grid.cs" id="1_b2puv"]
+[ext_resource type="Script" uid="uid://b3dh4hrs6n4ac" path="res://src/scripts/GameBoard.cs" id="1_b2puv"]
 [ext_resource type="BoxMesh" uid="uid://bs0347jhliokh" path="res://src/prefabs/part1-mesh.tres" id="2_b2puv"]
+[ext_resource type="Script" uid="uid://colu4aft7otr5" path="res://src/scripts/CursorRayCast.cs" id="3_6phig"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6phig"]
 size = Vector3(5.7834473, 1, 5.3079834)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="Grid" type="StaticBody3D" parent="." node_paths=PackedStringArray("Cam", "ColShape", "BoxContainer", "RayCast")]
+[node name="Grid" type="StaticBody3D" parent="." node_paths=PackedStringArray("Cam", "CursorCast", "UndoButton", "ColShape", "BoxContainer")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_b2puv")
 Cam = NodePath("env/Camera3D")
+CursorCast = NodePath("../RayCast3D")
+UndoButton = NodePath("../UndoButton")
 ColShape = NodePath("CollisionShape3D")
 BoxContainer = NodePath("Container")
-bitmask = 6
-RayCast = NodePath("env/Camera3D/RayCast3D")
 
 [node name="Container" type="Node3D" parent="Grid"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0.5)
@@ -38,8 +39,19 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 [node name="Camera3D" type="Camera3D" parent="Grid/env"]
 transform = Transform3D(1, 0, 0, 0, -0.16446233, 0.98638326, 0, -0.98638326, -0.16446233, 0, 0, 0)
 
-[node name="RayCast3D" type="RayCast3D" parent="Grid/env/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-visible = false
-target_position = Vector3(0, -8, 0)
+[node name="RayCast3D" type="RayCast3D" parent="." node_paths=PackedStringArray("Cam")]
+transform = Transform3D(0.36, 0, 0, 0, 0.36, 0, 0, 0, 0.36, 0, 0, 0)
+target_position = Vector3(0, -30, 0)
 collision_mask = 6
+script = ExtResource("3_6phig")
+Cam = NodePath("../Grid/env/Camera3D")
+
+[node name="UndoButton" type="Button" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1057.0
+offset_bottom = -591.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Undo"
