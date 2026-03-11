@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using Godot.Collections;
 
 using Idxz = (int x, int z);
 
@@ -29,10 +28,8 @@ public partial class GameBoard : StaticBody3D
     public override void _Ready()
     {
         BoxScene = GD.Load<PackedScene>("res://src/prefabs/BasicBox.tscn");
-        // GD.Print(CommandCtx);
         UndoButton.Pressed += CommandCtx.Undo;
 
-        // init data (debug)
         for (int i = 0; i < dimentions; i++)
         {
 
@@ -47,9 +44,6 @@ public partial class GameBoard : StaticBody3D
             }
         }
     }
-    // public override void _Process(double delta)
-    // {
-    // }
 
     public override void _Input(InputEvent @event)
     {
