@@ -94,7 +94,7 @@ class CardBuilder
         if (CardValue < 0) str = str.TrimEnd('s');
 
         if (Divinity > 90 && Demonic > 90) { str += " (Artifact from Bard of Anarchy)"; color = new Color(0x36013f); }
-        GD.Print($"CardValue={CardValue}, Divinity={Divinity}, Demonic={Demonic}, Condition={Condition}");
+        // GD.Print($"CardValue={CardValue}, Divinity={Divinity}, Demonic={Demonic}, Condition={Condition}");
         return (str, color);
     }
     static string SuitToStr(int? Value)
